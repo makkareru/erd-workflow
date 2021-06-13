@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   db:
-    image: mysql
+    image: mysql:5.7.34
     volumes:
       - ../sql:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password
@@ -12,3 +12,11 @@ services:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - "3306:3306"
+
+  schemaspy:
+    image: schemaspy/schemaspy
+    command: "java -jar schemaspy.jar -db testdb -t mysql -host db -port 3306 -s testdb -u root -p password"
+    volumes:
+      - ./schemaspy:/output
+    depends_on:
+      - db
