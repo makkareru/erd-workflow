@@ -1,3 +1,5 @@
+USE testdb;
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     user_id BIGINT NOT NULL PRIMARY KEY,
