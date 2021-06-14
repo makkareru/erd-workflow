@@ -41,7 +41,9 @@ jobs:
 
       - name: Generate ERD
         run: |
-          sudo docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output --link mysql schemaspy/schemaspy java -jar schemaspy.jar -db testdb -t mysql -host mysql -port 3306 -s testdb -u root -p password -debug
+          sudo mkdir -p ./docker/schemaspy/output
+          sudo chmod +777 ./docker/schemaspy/output
+          docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output --link mysql schemaspy/schemaspy java -jar schemaspy.jar -db testdb -t mysql -host mysql -port 3306 -s testdb -u root -p password -debug
 
       - name: Stop mysql
         run: |
