@@ -54,12 +54,8 @@ jobs:
         run: |
           docker stop mysql
 
-      - name: Create sample file
-        run: |
-          touch docker/schemaspy/sample.txt
-
       - name: Upload file to S3
         env:
           S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
         run: |
-          aws s3 cp ./docker/schemaspy s3://$S3_UPLOAD_BUCKET/schemaspy --recursive
+          aws s3 cp ./docker/schemaspy/output s3://$S3_UPLOAD_BUCKET/schemaspy --recursive
