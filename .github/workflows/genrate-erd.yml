@@ -53,7 +53,7 @@ jobs:
 
       - name: Stop mysql
         run: |
-          docker stop mysql
+          docker stop mysql8
 
       - name: Remove old Verision
         env:
