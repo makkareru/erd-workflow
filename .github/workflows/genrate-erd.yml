@@ -23,7 +23,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-northeast-1
-          s3_upload_bucket: ${{ secrets.S3_UPLOAD_BUCKET }}
 
       - name: Wakeup mysql
         run: |
@@ -49,8 +48,12 @@ jobs:
           docker stop mysql8
 
       - name: Remove old Verision
-        run: aws s3 rm s3://$s3_upload_bucket/schemaspy --recursive
+        env:
+          S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
+        run: aws s3 rm s3://$S3_UPLOAD_BUCKET/schemaspy --recursive
 
       - name: Upload file to S3
+        env:
+          S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
         run: |
-          aws s3 cp /output s3://$s3_upload_bucket/schemaspy --recursive
+          aws s3 cp /output s3://$S3_UPLOAD_BUCKET/schemaspy --recursive
