@@ -3,7 +3,8 @@ version: '3.1'
 services:
 
   db:
-    image: mysql:8.0
+    image: mysql:5.7.34
+    # image: mysql:8.0
     volumes:
       - ../sql:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password
@@ -14,9 +15,29 @@ services:
       - "3306:3306"
 
   schemaspy:
-    image: schemaspy/schemaspy
-    command: "java -jar schemaspy.jar -db testdb -t mysql -host db -port 3306 -s testdb -u root -p password"
+    image: schemaspy/schemaspy:snapshot
+    command: "java -jar schemaspy.jar -db testdb -t mysql -host db -port 3306 -s testdb -u root -p password -debug"
     volumes:
-      - ./schemaspy:/output
+      - ./schemaspy/drivers:/drivers
+      - ./schemaspy/html:/output
     depends_on:
       - db
+
+#  schemaspy:
+#    image: schemaspy/schemaspy:snapshot
+#    command:
+#      java -jar schemaspy.jar
+#      -t mysql
+#      -host db
+#      -db testdb
+#      -port 3306
+#      -u root
+#      -p password
+#      -s testdb
+#      -connprops useSSL\\=false
+#    volumes:
+#      - ./schemaspy/drivers:/drivers
+#      - ./schemaspy/output:/output
+#    depends_on:
+#      - db
+#
