@@ -34,7 +34,7 @@ jobs:
 
       - name: Wakeup mysql
         run: |
-          docker run --rm --name mysql8 -p 3306:3306 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=password -v $PWD/sql:/docker-entrypoint-initdb.d mysql:8.0 --default-authentication-plugin=mysql_native_password
+          docker run -d --rm --name mysql8 -p 3306:3306 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=password -v $PWD/sql:/docker-entrypoint-initdb.d mysql:8.0 --default-authentication-plugin=mysql_native_password
 
       # mysql5.7 command
       # docker run -d --rm --name mysql -p 3306:3306 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=password -v $PWD/sql:/docker-entrypoint-initdb.d mysql:5.7.34
