@@ -38,9 +38,9 @@ jobs:
 
       - name: Generate ERD
         run: |
-          sudo mkdir -p ./docker/schemaspy/output
-          sudo chmod +777 ./docker/schemaspy/output
-          docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output -v $PWD/docker/schemaspy/drivers:/drivers --link mysql8 schemaspy/schemaspy:snapshot java -jar schemaspy.jar -db testdb -t mysql -host mysql8 -port 3306 -s testdb -u root -p password -connprops useSSL\\=false -debug
+          sudo mkdir -p /output
+          sudo chmod +777 /output
+          docker run --rm --name schemaspy -v /output:/output -v $PWD/docker/schemaspy/drivers:/drivers --link mysql8 schemaspy/schemaspy:snapshot java -jar schemaspy.jar -db testdb -t mysql -host mysql8 -port 3306 -s testdb -u root -p password -connprops useSSL\\=false -debug
         # mysql5.7 command
         # docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output --link mysql schemaspy/schemaspy java -jar schemaspy.jar -db testdb -t mysql -host mysql -port 3306 -s testdb -u root -p password -debug
 
@@ -53,4 +53,4 @@ jobs:
 
       - name: Upload file to S3
         run: |
-          aws s3 cp ./docker/schemaspy/output s3://$s3_upload_bucket/schemaspy --recursive
+          aws s3 cp /output s3://$s3_upload_bucket/schemaspy --recursive
