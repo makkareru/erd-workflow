@@ -43,6 +43,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Generate ERD
         run: |
+          mkdir /output
+          chmod +777 /output
           docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output --link mysql schemaspy/schemaspy java -jar schemaspy.jar -db testdb -t mysql -host mysql -port 3306 -s testdb -u root -p password -debug
 
       - name: Stop mysql
