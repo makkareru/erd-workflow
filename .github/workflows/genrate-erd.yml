@@ -34,3 +34,7 @@ jobs:
           mkdir docker/schemaspy
           cd docker
           docker run -d --rm --name schemaspy -v schemaspy:/output schemaspy/schemaspy "java -jar schemaspy.jar -db testdb -t mysql -host db -port 3306 -s testdb -u root -p password"
+
+      - name: stop mysql
+        run: |
+          docker stop mysql
