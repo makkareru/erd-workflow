@@ -40,6 +40,8 @@ jobs:
       - name: docker ps
         run: docker ps
 
+      - name: wait db setup
+        run: sleep 10
       # Runs a set of commands using the runners shell
       - name: Generate ERD
         run: |
