@@ -23,11 +23,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: wakeup mysql
+      - uses: actions/checkout@v2
+      - name: wakeup mysql
         run: |
           docker run -d --rm --name mysql -p 3306:3306 MYSQL_DATABASE=testdb MYSQL_ROOT_PASSWORD=password mysql:5.7.34
 
-      - uses: initialize database
+      - name: initialize database
         run: |
           mysql -uroot -ppassword testdb < ../sql/02_create_table.sql
 
