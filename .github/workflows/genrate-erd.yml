@@ -23,14 +23,17 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: wakeup mysql
+        run: |
+          docker run -d --rm --name mysql -p 3306:3306 MYSQL_DATABASE=testdb MYSQL_ROOT_PASSWORD=password mysql:5.7.34
+
+      - uses: initialize database
+        run: |
+          mysql -uroot -ppassword testdb < ../sql/02_create_table.sql
 
       # Runs a set of commands using the runners shell
       - name: Generate ERD
         run: |
-          sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+          mkdir docker/schemaspy
           cd docker
-          docker-compose up -d testdb
-          sleep 5
-          mkdir schemaspy
-          docker-compose up -d schemaspy
+          docker run -d --rm --name schemaspy -v ./schemaspy:/output schemaspy/schemaspy "java -jar schemaspy.jar -db testdb -t mysql -host db -port 3306 -s testdb -u root -p password"
