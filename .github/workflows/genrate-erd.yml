@@ -35,7 +35,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Wakeup mysql
         run: |
-          docker run -d --rm --name mysql -p 3306:3306 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=password -v $PWD/sql:/docker-entrypoint-initdb.d mysql:5.7.34
+          docker run --rm --name mysql -p 3306:3306 -e MYSQL_DATABASE=testdb -e MYSQL_ROOT_PASSWORD=password -v $PWD/sql:/docker-entrypoint-initdb.d mysql:5.7.34
 
       # Runs a set of commands using the runners shell
       - name: Generate ERD
