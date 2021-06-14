@@ -48,6 +48,10 @@ jobs:
         run: |
           docker stop mysql
 
+      - name: Create sample file
+        run: |
+          touch sample.txt
+
       - name: Upload file to S3
         env:
           S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
