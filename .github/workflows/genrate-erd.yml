@@ -11,11 +11,11 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - env:
-          S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
 
       - name: Checkout
         uses: actions/checkout@v2
