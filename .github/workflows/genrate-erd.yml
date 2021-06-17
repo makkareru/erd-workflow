@@ -43,7 +43,7 @@ jobs:
 
       - name: Generate ERD
         run: |
-          sudo mkdir -p $OUTPUT_PATH
+          mkdir -p $OUTPUT_PATH
           docker run --rm --name schemaspy --mount type=bind,source="$OUTPUT_PATH,target=/output" -v $PWD/docker/schemaspy/drivers:/drivers --link mysql8 schemaspy/schemaspy:snapshot java -jar schemaspy.jar -db $TARGET_SCHEMA -t mysql -host mysql8 -port 3306 -s $TARGET_SCHEMA -u $MYSQL_USER -p $MYSQL_PASS -connprops useSSL\\=false -debug
         # mysql5.7 command
         # docker run --rm --name schemaspy -v $PWD/docker/schemaspy/output:/output --link mysql schemaspy/schemaspy java -jar schemaspy.jar -db testdb -t mysql -host mysql -port 3306 -s testdb -u root -p password -debug
